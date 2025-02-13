@@ -1,0 +1,135 @@
+<mat-card class="cardWithShadow theme-card">
+    <mat-card-header style="background-color: rgb(0, 161, 255, 1);">
+      <mat-card-title class="m-b-0" >Add / Edit Test</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <form>
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- input -->
+            <mat-label class="f-w-600 m-b-8 d-block">Test Name</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput placeholder="Enter Test Name" />
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Test Print Name</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Test Print Name " />
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <!-- input -->
+            <mat-label class="f-w-600 m-b-8 d-block">Shortcut Key</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput  placeholder="Enter Test Name Shortcut Key" />
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Price </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput  placeholder="Enter Price" />
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <!-- input -->
+            <mat-label class="f-w-600 m-b-8 d-block">Minimum selling price*</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput placeholder="Enter Minimum selling price" />
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Cost of test*</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Cost of test" />
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <!-- input -->
+            <mat-label class="f-w-600 m-b-8 d-block">Department Name</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-select [(value)]="selectedDepartment">
+                  @for(option of department; track option.value) {
+                  <mat-option [value]="option.value">{{
+                    option.viewValue
+                    }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Test type*</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-select [(value)]="selectedTestType">
+                  @for(option of testType; track option.value) {
+                  <mat-option [value]="option.value">{{
+                    option.viewValue
+                    }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Parameter Space :*</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-select [(value)]="selectParameterSpace">
+                  @for(option of parameterSpace; track option.value) {
+                  <mat-option [value]="option.value">{{
+                    option.viewValue
+                    }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Test Method :*</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Test Method Name" />
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Test Schedule :</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Test Schedule " />
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Test Reported On</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Test Reported On" />
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Sample Type </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Sample Type " />
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Test Code :</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Test Code " />
+              </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Machine Type :</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-select [(value)]="selectedmachineType">
+                  @for(option of machineType; track option.value) {
+                  <mat-option [value]="option.value">{{
+                    option.viewValue
+                    }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+          </div>
+        </div>
+        
+  
+        <div class="m-t-12">
+          <button mat-flat-button color="primary" class="m-r-8">Submit</button>
+          <button mat-stroked-button color="warn" (click)="closeDialog()">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>

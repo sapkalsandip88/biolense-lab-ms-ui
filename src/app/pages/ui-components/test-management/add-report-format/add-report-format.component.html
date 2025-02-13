@@ -1,0 +1,42 @@
+<mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">Add Report Fomats</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- basic -->
+          <!-- ------------------------------------------------------------------------- -->
+  
+          <mat-card class="b-1 shadow-none">
+            <mat-card-header>
+              <mat-card-title>Pathology(Parameter Types)</mat-card-title>
+            </mat-card-header>
+            <mat-list role="list">
+                <mat-list-item role="listitem" (click)="addParamWithNormRange()">Parameter with normal range</mat-list-item>
+                <mat-list-item role="listitem" (click)="addParamWithDescRange()">Parameter with Descriptive range</mat-list-item>
+                <mat-list-item role="listitem" (click)="addParamWithAgeRange()">Parameter with age range</mat-list-item>
+                <mat-list-item role="listitem" (click)="addDescParamNoRange()">Descriptive Parameter(No range)</mat-list-item>
+                <mat-list-item role="listitem" (click)="addParamWithListVal()">Parameter with list of values</mat-list-item>
+                <mat-list-item role="listitem" (click)="addHeadingInCenter()">Heading In Center</mat-list-item>
+                <mat-list-item role="listitem" (click)="addHeadingInLeft()">Heading In Left</mat-list-item>
+              </mat-list>
+          </mat-card>
+        </div>
+  
+        <div class="col-9">
+          <!-- ------------------------------------------------------------------------- -->
+          <!-- Form Control -->
+          <!-- ------------------------------------------------------------------------- -->
+  
+          <mat-card class="b-1 shadow-none">
+            <mat-card-header>
+              <mat-card-title>PDF Format</mat-card-title>
+            </mat-card-header>
+    
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
