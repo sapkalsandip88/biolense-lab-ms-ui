@@ -9,6 +9,7 @@ import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { AppFormsComponent } from './forms/forms.component';
 import { AppTablesComponent } from './tables/tables.component';
 import { TestManagementComponent } from './test-management/test-management.component';
+import { AddReportFormatComponent } from './test-management/add-report-format/add-report-format.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -23,8 +24,8 @@ export const UiComponentsRoutes: Routes = [
         component: AppBadgeComponent,
       },
       {
-        path: 'chips',
-        component: AppChipsComponent,
+        path: 'add-report-format',
+        component: AddReportFormatComponent,
       },
       {
         path: 'lists',

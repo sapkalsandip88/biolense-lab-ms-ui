@@ -1,0 +1,19 @@
+<mat-card-header>
+
+    <mat-card-title>Confirm Delete</mat-card-title>
+
+</mat-card-header>
+
+<mat-dialog-content>
+
+    <p>Are you sure you want to delete this item?</p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="m-t-12">
+    <button mat-flat-button color="primary" class="m-r-8" (click)="onNoClick()">Cancel</button>
+
+    <button mat-flat-button color="primary" class="m-r-8" [mat-dialog-close]="true" (click)="deleteTest()">Delete</button>
+</div>
+</mat-dialog-actions>

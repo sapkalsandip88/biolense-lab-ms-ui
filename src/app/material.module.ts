@@ -41,6 +41,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [],
@@ -81,6 +82,15 @@ import { MatTableModule } from '@angular/material/table';
     MatSortModule,
     MatTableModule,
     MatDialogModule,
+  ],
+  imports:[
+    ToastrModule.forRoot({
+      timeOut:3000,
+      closeButton:true,
+      positionClass:'toast-top-right',
+      preventDuplicates:true,
+    }),
+    CommonModule,
   ],
 })
 export class MaterialModule {}

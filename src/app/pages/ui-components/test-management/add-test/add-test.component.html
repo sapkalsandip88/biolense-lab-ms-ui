@@ -1,54 +1,62 @@
 <mat-card class="cardWithShadow theme-card">
+  <div style="background-color: rgb(0, 161, 255, 1);">  
+    <mat-icon matChipRemove (click)="closeDialog()" style="float: right !important;">cancel</mat-icon> 
+  </div>
+
     <mat-card-header style="background-color: rgb(0, 161, 255, 1);">
       <mat-card-title class="m-b-0" >Add / Edit Test</mat-card-title>
     </mat-card-header>
     <mat-card-content class="b-t-1">
+
       <form>
+        <mat-form-field *ngIf="!showField">
+          <input matInput name="id"  [(ngModel)]="testMaster.id">
+        </mat-form-field>
         <div class="row">
           <div class="col-lg-6">
             <!-- input -->
-            <mat-label class="f-w-600 m-b-8 d-block">Test Name</mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Test Name<span style="color: red;">*</span> </mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput placeholder="Enter Test Name" />
+              <input matInput placeholder="Enter Test Name"  [(ngModel)]="testMaster.testName" name="testName" required/>
             </mat-form-field>
           </div>
           <div class="col-lg-6">
-            <mat-label class="f-w-600 m-b-8 d-block">Test Print Name</mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Test Print Name<span style="color: red;">*</span> </mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput placeholder="Enter Test Print Name " />
+                <input matInput placeholder="Enter Test Print Name " [(ngModel)]="testMaster.testPrintName" name="testPrintName" required/>
               </mat-form-field>
           </div>
           <div class="col-lg-6">
             <!-- input -->
-            <mat-label class="f-w-600 m-b-8 d-block">Shortcut Key</mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Shortcut Key<span style="color: red;">*</span> </mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput  placeholder="Enter Test Name Shortcut Key" />
+              <input matInput  placeholder="Enter Test Name Shortcut Key" [(ngModel)]="testMaster.shortCutKey" name="shortCutKey" required/>
             </mat-form-field>
           </div>
           <div class="col-lg-6">
-            <mat-label class="f-w-600 m-b-8 d-block">Price </mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Price <span style="color: red;">*</span> </mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput  placeholder="Enter Price" />
+              <input matInput  placeholder="Enter Price"   [(ngModel)]="testMaster.price" name="price" required/>
             </mat-form-field>
           </div>
           <div class="col-lg-6">
             <!-- input -->
             <mat-label class="f-w-600 m-b-8 d-block">Minimum selling price*</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput placeholder="Enter Minimum selling price" />
+              <input matInput placeholder="Enter Minimum selling price"   [(ngModel)]="testMaster.minSalePrice" name="minSalePrice"/>
             </mat-form-field>
           </div>
           <div class="col-lg-6">
             <mat-label class="f-w-600 m-b-8 d-block">Cost of test*</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput placeholder="Enter Cost of test" />
+                <input matInput placeholder="Enter Cost of test"   [(ngModel)]="testMaster.costOfTest" name="costOfTest"/>
               </mat-form-field>
           </div>
           <div class="col-lg-6">
             <!-- input -->
             <mat-label class="f-w-600 m-b-8 d-block">Department Name</mat-label>
             <mat-form-field appearance="outline" class="w-100">
-                <mat-select [(value)]="selectedDepartment">
+                <mat-select [(value)]="selectedDepartment"   [(ngModel)]="testMaster.departmentName" name="departmentName">
                   @for(option of department; track option.value) {
                   <mat-option [value]="option.value">{{
                     option.viewValue
@@ -58,9 +66,9 @@
               </mat-form-field>
           </div>
           <div class="col-lg-6">
-            <mat-label class="f-w-600 m-b-8 d-block">Test type*</mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Test type</mat-label>
             <mat-form-field appearance="outline" class="w-100">
-                <mat-select [(value)]="selectedTestType">
+                <mat-select [(value)]="selectedTestType"   [(ngModel)]="testMaster.testType" name="testType">
                   @for(option of testType; track option.value) {
                   <mat-option [value]="option.value">{{
                     option.viewValue
@@ -70,9 +78,9 @@
               </mat-form-field>
           </div>
           <div class="col-lg-6">
-            <mat-label class="f-w-600 m-b-8 d-block">Parameter Space :*</mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Parameter Space :</mat-label>
             <mat-form-field appearance="outline" class="w-100">
-                <mat-select [(value)]="selectParameterSpace">
+                <mat-select [(value)]="selectParameterSpace"  [(ngModel)]="testMaster.parameterSapce" name="parameterSapce">
                   @for(option of parameterSpace; track option.value) {
                   <mat-option [value]="option.value">{{
                     option.viewValue
@@ -82,39 +90,39 @@
               </mat-form-field>
           </div>
           <div class="col-lg-6">
-            <mat-label class="f-w-600 m-b-8 d-block">Test Method :*</mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Test Method :</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput placeholder="Enter Test Method Name" />
+                <input matInput placeholder="Enter Test Method Name"   [(ngModel)]="testMaster.testMethod" name="testMethod"/>
               </mat-form-field>
           </div>
           <div class="col-lg-6">
             <mat-label class="f-w-600 m-b-8 d-block">Test Schedule :</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput placeholder="Enter Test Schedule " />
+                <input matInput placeholder="Enter Test Schedule "  [(ngModel)]="testMaster.testSchedule" name="testSchedule"/>
               </mat-form-field>
           </div>
           <div class="col-lg-6">
             <mat-label class="f-w-600 m-b-8 d-block">Test Reported On</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput placeholder="Enter Test Reported On" />
+                <input matInput placeholder="Enter Test Reported On"  [(ngModel)]="testMaster.testReportedOn" name="testReportedOn"/>
               </mat-form-field>
           </div>
           <div class="col-lg-6">
             <mat-label class="f-w-600 m-b-8 d-block">Sample Type </mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput placeholder="Enter Sample Type " />
+                <input matInput placeholder="Enter Sample Type "   [(ngModel)]="testMaster.sampleType" name="sampleType"/>
               </mat-form-field>
           </div>
           <div class="col-lg-6">
-            <mat-label class="f-w-600 m-b-8 d-block">Test Code :</mat-label>
+            <mat-label class="f-w-600 m-b-8 d-block">Test Code <span style="color: red;">*</span> </mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput placeholder="Enter Test Code " />
+                <input matInput placeholder="Enter Test Code "   [(ngModel)]="testMaster.testCode" name="testCode" required  />
               </mat-form-field>
           </div>
           <div class="col-lg-6">
             <mat-label class="f-w-600 m-b-8 d-block">Machine Type :</mat-label>
             <mat-form-field appearance="outline" class="w-100">
-                <mat-select [(value)]="selectedmachineType">
+                <mat-select [(value)]="selectedmachineType"  [(ngModel)]="testMaster.machineType" name="machineType">
                   @for(option of machineType; track option.value) {
                   <mat-option [value]="option.value">{{
                     option.viewValue
@@ -127,7 +135,13 @@
         
   
         <div class="m-t-12">
-          <button mat-flat-button color="primary" class="m-r-8">Submit</button>
+          <button mat-flat-button color="primary" class="m-r-8" (click)="saveTestData()">
+            @if(testMaster.id) {
+              Update
+          } @else {
+              Submit
+          }
+          </button>
           <button mat-stroked-button color="warn" (click)="closeDialog()">Cancel</button>
         </div>
       </form>

@@ -11,7 +11,7 @@
       <div class="table-responsive">
         <table mat-table [dataSource]="dataSource1" matSort class="w-100">
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header  class="f-w-600 f-s-14 p-l-0">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header  class="f-w-600 f-s-14 p-l-0" >
               Sr. No.
             </th>
             <td mat-cell *matCellDef="let element" class="p-l-0">
@@ -23,7 +23,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="f-id">
-            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" >
               <mat-form-field>
                 <input matInput (keyup)="filterChangeEvent('id', $event)">
               </mat-form-field>
@@ -34,7 +34,7 @@
             <th mat-header-cell *matHeaderCellDef  mat-sort-header  class="f-w-600 f-s-14 p-l-0">
               Test Name
             </th>
-            <td mat-cell *matCellDef="let element" class="p-l-0">
+            <td mat-cell *matCellDef="let element" class="f-w-600 f-s-14 p-l-0" >
                 <div class="m-l-16">
                   <h6 class="f-s-14 f-w-600">
                     {{ element.testName }}
@@ -43,7 +43,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="f-testName">
-            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" >
               <mat-form-field>
                 <input matInput (keyup)="filterChangeEvent('testName', $event)">
               </mat-form-field>
@@ -62,7 +62,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="f-price">
-            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" >
               <mat-form-field>
                 <input matInput (keyup)="filterChangeEvent('price', $event)">
               </mat-form-field>
@@ -81,7 +81,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="f-testCode">
-            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" >
               <mat-form-field>
                 <input matInput (keyup)="filterChangeEvent('testCode', $event)">
               </mat-form-field>
@@ -100,7 +100,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="f-testType">
-            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" >
               <mat-form-field>
                 <input matInput (keyup)="filterChangeEvent('testType', $event)">
               </mat-form-field>
@@ -119,7 +119,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="f-outsourcingCenter">
-            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" >
               <mat-form-field>
                 <input matInput (keyup)="filterChangeEvent('outsourcingCenter', $event)">
               </mat-form-field>
@@ -133,15 +133,15 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="routeToAddReport()">
+                <button mat-menu-item (click)="routeToAddReport(element.id,element.testName)">
                   <mat-icon>file_copy</mat-icon>
                   <span>Add Report</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="openPopupToEdit(element.id)">
                   <mat-icon>edit</mat-icon>
                   <span>Edit</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="deleteTest(element.id)">
                   <mat-icon>delete</mat-icon>
                   <span>Delete</span>
                 </button>

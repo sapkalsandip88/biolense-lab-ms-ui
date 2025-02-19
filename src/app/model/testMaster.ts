@@ -1,0 +1,23 @@
+export class TestMaster{
+     id:number
+     labId:number;
+    testName:string;
+    testCode:string;
+    testPrintName:string;
+    shortCutKey:string;
+    price:number;
+    minSalePrice:number;
+    costOfTest:number;
+    departmentName:string;
+    testType:string;
+    parameterSapce:string;
+    testMethod:string;
+    testSchedule:string;
+    testReportedOn:string;
+    sampleType:string;
+    machineType:string;
+    createdBy:string;
+    createAt:Date;
+    lastUpdatedAt:Date;
+    outsourcingCenter:string;
+}

@@ -1,1 +1,137 @@
-<p>prameter-with-normal-range works!</p>
+<mat-card class="cardWithShadow theme-card">
+    <div style="background-color: rgb(0, 161, 255, 1);">  
+      <mat-icon matChipRemove (click)="closeDialog()" style="float: right !important;">cancel</mat-icon> 
+    </div>
+      <mat-card-header style="background-color: rgb(0, 161, 255, 1);">
+        <mat-card-title class="m-b-0" >Add / Edit <span style="background-color: rgb(0, 161, 255, 1);">{{parameterMaster.paramType}}</span></mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="b-t-1">
+  
+        <form>
+          <mat-form-field *ngIf="!showField">
+            <input matInput name="id"  [(ngModel)]="parameterMaster.paramId">
+          </mat-form-field>
+          <div class="row">
+            <div class="col-lg-6">
+              <!-- input -->
+              <mat-label class="f-w-600 m-b-8 d-block">Parameter Name<span style="color: red;">*</span> </mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput placeholder="Enter Parameter Name"  [(ngModel)]="parameterMaster.parameterName" name="parametrName" required/>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6" *ngIf="this.data.paramType != 'HEADING'">
+              <mat-label class="f-w-600 m-b-8 d-block">Unit<span style="color: red;">*</span> </mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <input matInput placeholder="Enter Unit " [(ngModel)]="parameterMaster.unit" name="unit" required/>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6" *ngIf="this.data.paramType != 'HEADING'">
+              <!-- input -->
+              <mat-label class="f-w-600 m-b-8 d-block">Method<span style="color: red;">*</span> </mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput  placeholder="Enter Method" [(ngModel)]="parameterMaster.method" name="method" required/>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6" *ngIf="this.data.paramType != 'HEADING'">
+              <mat-label class="f-w-600 m-b-8 d-block">Integration code <span style="color: red;">*</span> </mat-label>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput  placeholder="Enter Integration code"   [(ngModel)]="parameterMaster.integrationCode" name="integrationCode" required/>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-label class="f-w-600 m-b-8 d-block">Position in PDF</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-select [(value)]="selectedpositionInPdf"  [(ngModel)]="parameterMaster.positionInPdf" name="positionInPdf">
+                      @for(option of positionInPdf; track option.value) {
+                      <mat-option [value]="option.value">{{
+                        option.viewValue
+                        }}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+            </div>
+            
+            <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_NORMAL_RANGE' || this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
+                <mat-label class="f-w-600 m-b-8 d-block">Male Range from<span style="color: red;">*</span> </mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput placeholder="Min " [(ngModel)]="parameterMaster.maleRangeFrom" name="maleRangeFrom" required/>
+                  </mat-form-field>
+              </div>
+              <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_NORMAL_RANGE' || this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
+                <!-- input -->
+                <mat-label class="f-w-600 m-b-8 d-block">To<span style="color: red;">*</span> </mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <input matInput  placeholder="Max" [(ngModel)]="parameterMaster.maleRangeTo" name="maleRangeTo" required/>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_NORMAL_RANGE' || this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
+                <mat-label class="f-w-600 m-b-8 d-block">Female Range from<span style="color: red;">*</span> </mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                    <input matInput placeholder="Min " [(ngModel)]="parameterMaster.femaleRangeFrom" name="femaleRangeFrom" required/>
+                  </mat-form-field>
+              </div>
+              <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_NORMAL_RANGE' || this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
+                <!-- input -->
+                <mat-label class="f-w-600 m-b-8 d-block">To<span style="color: red;">*</span> </mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <input matInput  placeholder="Max" [(ngModel)]="parameterMaster.femaleRangeTo" name="femaleRangeTo" required/>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6" *ngIf=" this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_AGE_RANGE'  || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
+                <!-- input -->
+                <mat-label class="f-w-600 m-b-8 d-block">Descriptive male range<span style="color: red;">*</span> </mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <textarea matInput  [(ngModel)]="parameterMaster.descriptiveMaleRange" name="descriptiveMaleRange" required></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_AGE_RANGE'  || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
+                <!-- input -->
+                <mat-label class="f-w-600 m-b-8 d-block">Descriptive female range<span style="color: red;">*</span> </mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <textarea  matInput [(ngModel)]="parameterMaster.descriptiveFemaleRange" name="descriptiveFemaleRange" required></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6" *ngIf="this.data.paramType == 'DESC_PARAM_WITH_NO_RANGE'">
+                <!-- input -->
+                <mat-label class="f-w-600 m-b-8 d-block">Description<span style="color: red;">*</span> </mat-label>
+                <mat-form-field appearance="outline" class="w-100" color="primary">
+                  <textarea  matInput [(ngModel)]="parameterMaster.description" name="description" required></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6" *ngIf="this.data.paramType == 'HEADING'" style="float: left;">
+                <mat-label class="f-w-600 m-b-8 d-block">HEADING</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-select [(value)]="selectedHeadingPosition"  [(ngModel)]="parameterMaster.headingPosition" name="headingPosition">
+                      @for(option of headingPosition; track option.value) {
+                      <mat-option [value]="option.value">{{
+                        option.viewValue
+                        }}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+          </div>
+          <div  class="row" style="background-color: rgb(225, 229, 231); border-color: beige;">
+            <mat-card-header>
+                <mat-card-title class="m-b-0" >Settings</mat-card-title>
+              </mat-card-header>
+          </div>
+    
+          <div class="m-t-12">
+            <button mat-flat-button color="primary" class="m-r-8" (click)="saveParameterData()">
+                @if(parameterMaster.paramId) {
+                    Update
+                } @else {
+                    Submit
+                }
+                    </button>
+            @if(parameterMaster.paramId) {
+                <button mat-flat-button color="primary" class="m-r-8" (click)="deleteParameterData()">Delete</button>
+            }
+            <button mat-stroked-button color="warn" (click)="closeDialog()">Cancel</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>

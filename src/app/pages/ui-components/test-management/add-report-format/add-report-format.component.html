@@ -1,7 +1,9 @@
+@if( parameterMasterList.length>0) {
+
 <mat-card class="cardWithShadow theme-card">
-    <mat-card-header>
+    <!-- <mat-card-header>
       <mat-card-title class="m-b-0">Add Report Fomats</mat-card-title>
-    </mat-card-header>
+    </mat-card-header> -->
     <mat-card-content class="b-t-1">
       <div class="row">
         <div class="col-lg-3">
@@ -9,18 +11,19 @@
           <!-- basic -->
           <!-- ------------------------------------------------------------------------- -->
   
-          <mat-card class="b-1 shadow-none">
+          <mat-card class="b-1 shadow-none" style="background-color: rgb(13, 185, 185) !important;">
             <mat-card-header>
               <mat-card-title>Pathology(Parameter Types)</mat-card-title>
+              <!--<mat-card-title  (click)="loadParameters()">Parameter with normal range</mat-card-title>-->
             </mat-card-header>
             <mat-list role="list">
-                <mat-list-item role="listitem" (click)="addParamWithNormRange()">Parameter with normal range</mat-list-item>
-                <mat-list-item role="listitem" (click)="addParamWithDescRange()">Parameter with Descriptive range</mat-list-item>
-                <mat-list-item role="listitem" (click)="addParamWithAgeRange()">Parameter with age range</mat-list-item>
-                <mat-list-item role="listitem" (click)="addDescParamNoRange()">Descriptive Parameter(No range)</mat-list-item>
-                <mat-list-item role="listitem" (click)="addParamWithListVal()">Parameter with list of values</mat-list-item>
-                <mat-list-item role="listitem" (click)="addHeadingInCenter()">Heading In Center</mat-list-item>
-                <mat-list-item role="listitem" (click)="addHeadingInLeft()">Heading In Left</mat-list-item>
+                <mat-list-item role="listitem" (click)="addParamWithNormRange()" mat-raised-button matTooltip="Parameter with normal range">Parameter with normal range</mat-list-item>
+                <mat-list-item role="listitem" (click)="addParamWithDescRange()" mat-raised-button matTooltip="Parameter with Descriptive range">Parameter with Descriptive range</mat-list-item>
+                <mat-list-item role="listitem" (click)="addParamWithAgeRange()" mat-raised-button matTooltip="Parameter with age range">Parameter with age range</mat-list-item>
+                <mat-list-item role="listitem" (click)="addDescParamNoRange()" mat-raised-button matTooltip="Descriptive Parameter(No range)">Descriptive Parameter(No range)</mat-list-item>
+                <mat-list-item role="listitem" (click)="addParamWithListVal()" mat-raised-button matTooltip="Parameter with list of values">Parameter with list of values</mat-list-item>
+                <mat-list-item role="listitem" (click)="addHeadingInCenter()" mat-raised-button matTooltip="Heading In Center">Heading In Center</mat-list-item>
+                <mat-list-item role="listitem" (click)="addHeadingInLeft()" mat-raised-button matTooltip="Heading In Left">Heading In Left</mat-list-item>
               </mat-list>
           </mat-card>
         </div>
@@ -28,15 +31,76 @@
         <div class="col-9">
           <!-- ------------------------------------------------------------------------- -->
           <!-- Form Control -->
-          <!-- ------------------------------------------------------------------------- -->
+          <!-- ------------------------------------------------------------------------- -
   
-          <mat-card class="b-1 shadow-none">
+          <mat-card class="b-1 shadow-none" style="background-color: azure !important;">
             <mat-card-header>
-              <mat-card-title>PDF Format</mat-card-title>
+              <mat-card-title>Report Format For {{testName}}</mat-card-title>
+              <mat-card-title  *ngIf="!showField">{{testId}}</mat-card-title>
             </mat-card-header>
-    
           </mat-card>
+
+          ----------------------------PDF starts ----------------------------------------------->
+          <div class="pdf-container">
+              <div class="pdf-header"> 
+                <h4>PDF header</h4>
+                </div>
+                <mat-divider></mat-divider> 
+               <div class="pdf-content"> 
+                <mat-card class="pdf-page"> 
+                  <table>
+                    <tr>
+                    <td><span class="pdf-header-params-left">Patient name :</span></td>
+                    <td><span class="pdf-header-params-right">Reporting Time :</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="pdf-header-params-left">Age / Gender :</span></td>
+                    <td><span class="pdf-header-params-right">Collection Time :</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="pdf-header-params-left">Patient ID :</span></td>
+                    <td><span class="pdf-header-params-right">Referral Name :</span></td>
+                  </tr> 
+                  <tr>
+                    <td><span class="pdf-header-params-left">Source :</span></td>
+                    <td><span class="pdf-header-params-right"></span></td>
+                  </tr>
+                  </table>
+                  <div class="pdf-header"> 
+                    <h4>{{testName}}</h4>
+                  </div>
+                  <table>
+                      <th class="pdf-table-params">Test Description</th>
+                      <th class="pdf-table-params">Values</th>
+                      <th class="pdf-table-params">Reference range</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                  @for(params of parameterMasterList; track parameterMasterList){
+                   <tr class="showhim" (click)= "callEditParams(params)">
+                      <td class="pdf-table-params-heading"  *ngIf="params.paramType == 'HEADING' && params.headingPosition == 'LEFT'">{{params.parameterName}}</td>
+                      <td class="pdf-table-params-heading"  *ngIf="params.paramType == 'HEADING' && params.headingPosition != 'LEFT'">{{params.parameterName}}</td>
+                      <td class="pdf-table-params" *ngIf="params.paramType != 'HEADING'">{{params.parameterName}}</td>
+                      <td class="pdf-table-params" *ngIf="params.paramType != 'HEADING'">{{params.unit}}</td>
+                      <td class="pdf-table-params" *ngIf="params.paramType != 'HEADING'">{{params.maleRangeFrom}} - {{params.maleRangeTo}}</td>
+                      <td><button class="showme" mat-icon-button matTooltip="Edit Job" > <mat-icon>edit</mat-icon></button></td>
+                     
+                  </tr> 
+                }
+              
+                  </table>
+
+               </mat-card> 
+                </div> 
+                <div class="pdf-footer"> 
+                  <span>Page 1 of 1</span> 
+                </div> 
+            </div>
+            <button mat-raised-button color="primary" (click)="downloadPDF()">Download as PDF</button> 
+
+
         </div>
       </div>
     </mat-card-content>
   </mat-card>
+}

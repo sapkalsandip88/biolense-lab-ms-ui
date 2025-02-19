@@ -26,6 +26,9 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 //Import all material modules
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -47,6 +50,14 @@ export const appConfig: ApplicationConfig = {
       MaterialModule,
       TablerIconsModule.pick(TablerIcons),
       NgScrollbarModule,
+      CommonModule,
+      ToastrModule.forRoot({
+        timeOut: 3000,
+        closeButton: true,
+        positionClass: 'toast-top-right',
+        preventDuplicates: true,
+      }),
     ),
+
   ],
 };

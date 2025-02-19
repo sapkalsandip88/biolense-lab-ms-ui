@@ -1,46 +1,23 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { ThemePalette } from '@angular/material/core';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDropList,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import { ChangeDetectionStrategy,Component} from '@angular/core';
+import { CdkDragDrop,} from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card';
-import {
-  MatChipEditedEvent,
-  MatChipInputEvent,
-  MatChipsModule,
-} from '@angular/material/chips';
+import {MatChipsModule} from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AddTestComponent } from '../add-test/add-test.component';
 import { PrameterWithNormalRangeComponent } from './prameter-with-normal-range/prameter-with-normal-range.component';
-
-export interface ChipColor {
-  name: string;
-  color: ThemePalette;
-}
-
-export interface Fruit {
-  name: string;
-}
-
-export interface Vegetable {
-  name: string;
-}
-
+import { ActivatedRoute} from '@angular/router';
+import { ParameterMaster } from 'src/app/model/parameterMaster';
+import { TestManagementService } from 'src/app/services/test-management.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-add-report-format',
   imports: [ MatFormFieldModule,
@@ -50,134 +27,158 @@ export interface Vegetable {
       FormsModule,
       ReactiveFormsModule,
       MatButtonModule,
-      MatListModule],
+      MatListModule,
+      MatToolbarModule,
+      MatTableModule,
+      CommonModule,
+      MatTooltipModule
+    ],
       changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './add-report-format.component.html',
   styleUrl: './add-report-format.component.scss'
 })
 export class AddReportFormatComponent {
 
-  constructor(private dialog : MatDialog){
+  testId:number;
+  testName:string;
+  showField:boolean = true;
+  parameterMasterList: ParameterMaster[];
+  constructor(private dialog : MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private _testService: TestManagementService,
+  ){
+  } 
+  dataLoaded=true;
+   ngOnInit(){
+    console.log("dataloaded :", this.dataLoaded)
+    
+    this.activatedRoute.queryParams.subscribe(params =>{
+      this.testId =  params['id'];
+      this.testName =  params['testName'];
+      console.log("id ", params['id']);
+    });
+    setTimeout(()=>{
+      this.dataLoaded = true;
+      console.log("dataloaded :", this.dataLoaded)
+      //this.loadParameters();
+    }, 2000)
+   this.loadParameters();
+   
+  }
+  loadParameters(){
+    this._testService.getParamForTest(this.testId).subscribe(resp => { 
+      this.parameterMasterList =  resp;
+      console.log(" param list :", this.parameterMasterList);
+    });
     
   }
- readonly vegetables = signal<Vegetable[]>([
-    { name: 'apple' },
-    { name: 'banana' },
-    { name: 'strawberry' },
-    { name: 'orange' },
-    { name: 'kiwi' },
-    { name: 'cherry' },
-  ]);
 
-  drop(event: CdkDragDrop<Vegetable[]>) {
-    this.vegetables.update((vegetables) => {
-      moveItemInArray(vegetables, event.previousIndex, event.currentIndex);
-      return [...vegetables];
-    });
-  }
-
-  //
-  // Stacked
-  //
-  availableColors: ChipColor[] = [
-    { name: 'Primary', color: 'primary' },
-    { name: 'Accent', color: 'accent' },
-    { name: 'Warn', color: 'warn' },
-  ];
-
-  //
-  //  chips with input
-  //
-  addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  fruits: Fruit[] = [{ name: 'Lemon' }, { name: 'Lime' }, { name: 'Apple' }];
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our fruit
-    if (value) {
-      this.fruits.push({ name: value });
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-  }
-
-  remove(fruit: Fruit): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
-    }
-  }
-
-  edit(fruit: Fruit, event: MatChipEditedEvent) {
-    const value = event.value.trim();
-
-    // Remove fruit if it no longer has a name
-    if (!value) {
-      this.remove(fruit);
-      return;
-    }
-
-    // Edit existing fruit
-    const index = this.fruits.indexOf(fruit);
-    if (index >= 0) {
-      this.fruits[index].name = value;
-    }
-  }
-
-  // form control
-
-  readonly keywords = signal(['angular', 'how-to', 'tutorial', 'accessibility']);
-  readonly formControl = new FormControl(['angular']);
-
-  announcer = inject(LiveAnnouncer);
-
-  removeKeyword(keyword: string) {
-    this.keywords.update(keywords => {
-      const index = keywords.indexOf(keyword);
-      if (index < 0) {
-        return keywords;
-      }
-
-      keywords.splice(index, 1);
-      this.announcer.announce(`removed ${keyword}`);
-      return [...keywords];
-    });
-  }
-
-  addForm(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    // Add our keyword
-    if (value) {
-      this.keywords.update(keywords => [...keywords, value]);
-    }
-
-    // Clear the input value
-    event.chipInput!.clear();
-  }
+  
+    
   addParamWithNormRange(){
   console.log("addParamWithNormRange()")
-  const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = '900px';
-      dialogConfig.height = '500px';
-      dialogConfig.backdropClass = 'popupBackdropClass';
-      this.dialog.open(PrameterWithNormalRangeComponent ,{
-        width : '1000px',
-      height : '500px',
-      });
+  this.openParamsAddDialog("PARAM_WITH_NORMAL_RANGE");
   }
- addParamWithDescRange(){}
- addParamWithAgeRange(){}
- addDescParamNoRange(){}
- addParamWithListVal(){}
- addHeadingInCenter(){}
- addHeadingInLeft(){}
+  
+ addParamWithDescRange(){
+  console.log("addParamWithDescRange()")
+  this.openParamsAddDialog("PARAM_WITH_DESC_RANGE");
+ }
+ addParamWithAgeRange(){
+  console.log("addParamWithAgeRange()")
+  this.openParamsAddDialog("PARAM_WITH_AGE_RANGE");
+ }
+ addDescParamNoRange(){
+  console.log("addDescParamNoRange()")
+  this.openParamsAddDialog("DESC_PARAM_WITH_NO_RANGE");
+ }
+ addParamWithListVal(){
+  this.openParamsAddDialog("PARAM_WITH_LIST_VALUE");
+ }
+ addHeadingInCenter(){
+  console.log("addHeadingInCenter()")
+  this.openParamsAddDialog("HEADING");
+ }
+ addHeadingInLeft(){
+  this.openParamsAddDialog("HEADING");
+ }
+
+ openParamsAddDialog(paramType:string){
+  const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '900px';
+    dialogConfig.height = '500px';
+    dialogConfig.backdropClass = 'popupBackdropClass';
+    this.dialog.open(PrameterWithNormalRangeComponent ,{
+      width : '1200px',
+      height : '500px',
+      data: {testId: this.testId, paramType: paramType},
+    }).afterClosed()
+    .subscribe((shouldReload: boolean) => {
+         //window.location.reload()
+         this.loadParameters()
+    });
 }
-function isDragDrop(object: any): object is CdkDragDrop<string[]> {
-  return 'previousIndex' in object;
+//Edit params Function call
+
+callEditParams(params: ParameterMaster) {
+  if(params.paramType== 'PARAM_WITH_NORMAL_RANGE') {
+    this.openParamsEditDialog("PARAM_WITH_NORMAL_RANGE", params);
+  }  
+  if(params.paramType== 'PARAM_WITH_DESC_RANGE') {
+    this.openParamsEditDialog(params.paramType, params);
+  } 
+  if(params.paramType== 'PARAM_WITH_AGE_RANGE') {
+    this.openParamsEditDialog(params.paramType, params);
+  } 
+  if(params.paramType== 'DESC_PARAM_WITH_NO_RANGE') {
+    this.openParamsEditDialog(params.paramType, params);
+  } 
+  if(params.paramType== 'PARAM_WITH_LIST_VALUE') {
+    this.openParamsEditDialog(params.paramType, params);
+  
+  } 
+  if(params.paramType== 'HEADING') {
+    this.openParamsEditDialog(params.paramType, params);
+  } 
+}
+
+ openParamsEditDialog(paramType:string,param:ParameterMaster){
+  const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '900px';
+    dialogConfig.height = '500px';
+    dialogConfig.backdropClass = 'popupBackdropClass';
+    this.dialog.open(PrameterWithNormalRangeComponent ,{
+      width : '1200px',
+    height : '500px',
+    data: {testId: param.testId, paramType: param.paramType, param:param},
+    }).afterClosed()
+    .subscribe((shouldReload: boolean) => {
+         //window.location.reload()
+         this.loadParameters()
+    });
+
+}
+
+downloadPDF() {
+const pdfElement = document.querySelector('.pdf-container') as HTMLElement;
+html2canvas(pdfElement,{
+  scale:2, 
+  useCORS:true, 
+  allowTaint: true,
+  backgroundColor:null,
+  removeContainer:true
+}).then(canvas=>{
+const imgData = canvas.toDataURL('image/png');
+const pdf = new jsPDF('p', 'mm','a4');
+const imgWidth = 210;
+const imgHeight = (canvas.height * imgWidth)/ canvas.width;
+pdf.addImage(imgData, 'PNG', 0,0, imgWidth, imgHeight);
+const pdfBlob = pdf.output('blob');
+const pdfUrl = URL.createObjectURL(pdfBlob);
+window.open(pdfUrl, '_blank');
+//pdf.save('document.pdf');
+}).catch(error =>console.error("error while generating PDF", error));
+}
+
 }
 
