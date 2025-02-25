@@ -45,7 +45,7 @@ dataLoaded : boolean = false;
   constructor(private dialogRef: MatDialogRef<PrameterWithNormalRangeComponent>,
     private _toastr: ToastrService,
     private _testService: TestManagementService,
-     @Inject(MAT_DIALOG_DATA) public data: { testId: number, paramType: string, param:ParameterMaster },
+     @Inject(MAT_DIALOG_DATA) public data: { testId: number, paramType: string, param:ParameterMaster, positionInPdf: number },
   ){ }
   showField = true;
   ngOnInit(){
@@ -54,6 +54,8 @@ dataLoaded : boolean = false;
     console.log("parameter : ",this.data.param);
     if(this.data.param != null || this.data.param != undefined){
     this.parameterMaster = this.data.param
+    } else {
+      this.parameterMaster.positionInPdf = this.data.positionInPdf;
     }
   
     this.preparePosition();
@@ -135,5 +137,15 @@ selectedHeadingPosition = this.headingPosition[1].value;
     }, error => {
       this._toastr.error(error.value, 'Error');
     })
+  }
+
+  reflectInFemalerangeFrom(event:any){
+    console.log("valuee : ",this.parameterMaster.maleRangeFrom)
+    this.parameterMaster.femaleRangeFrom = event.target.value;
+
+  }
+  reflectInFemalerangeTo(event:any){
+    this.parameterMaster.femaleRangeTo = event.target.value;
+
   }
 }

@@ -56,14 +56,14 @@
             <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_NORMAL_RANGE' || this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
                 <mat-label class="f-w-600 m-b-8 d-block">Male Range from<span style="color: red;">*</span> </mat-label>
                 <mat-form-field appearance="outline" class="w-100" color="primary">
-                    <input matInput placeholder="Min " [(ngModel)]="parameterMaster.maleRangeFrom" name="maleRangeFrom" required/>
+                    <input matInput placeholder="Min " [(ngModel)]="parameterMaster.maleRangeFrom" name="maleRangeFrom" (keyup)="reflectInFemalerangeFrom($event)" required/>
                   </mat-form-field>
               </div>
               <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_NORMAL_RANGE' || this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">
                 <!-- input -->
                 <mat-label class="f-w-600 m-b-8 d-block">To<span style="color: red;">*</span> </mat-label>
                 <mat-form-field appearance="outline" class="w-100" color="primary">
-                  <input matInput  placeholder="Max" [(ngModel)]="parameterMaster.maleRangeTo" name="maleRangeTo" required/>
+                  <input matInput  placeholder="Max" [(ngModel)]="parameterMaster.maleRangeTo" name="maleRangeTo"  (keyup)="reflectInFemalerangeTo($event)"  required/>
                 </mat-form-field>
               </div>
               <div class="col-lg-6" *ngIf="this.data.paramType == 'PARAM_WITH_NORMAL_RANGE' || this.data.paramType == 'PARAM_WITH_DESC_RANGE' || this.data.paramType == 'PARAM_WITH_LIST_VALUE'">

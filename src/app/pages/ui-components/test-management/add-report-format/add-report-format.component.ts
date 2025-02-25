@@ -42,6 +42,7 @@ export class AddReportFormatComponent {
   testId:number;
   testName:string;
   showField:boolean = true;
+  lenghtOfParam:number=0;
   parameterMasterList: ParameterMaster[];
   constructor(private dialog : MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -57,18 +58,20 @@ export class AddReportFormatComponent {
       this.testName =  params['testName'];
       console.log("id ", params['id']);
     });
-    setTimeout(()=>{
+   /* setTimeout(()=>{
       this.dataLoaded = true;
       console.log("dataloaded :", this.dataLoaded)
       //this.loadParameters();
-    }, 2000)
+    }, 2000)*/
    this.loadParameters();
    
   }
   loadParameters(){
     this._testService.getParamForTest(this.testId).subscribe(resp => { 
       this.parameterMasterList =  resp;
+      this.lenghtOfParam = this.parameterMasterList.length;
       console.log(" param list :", this.parameterMasterList);
+
     });
     
   }
@@ -104,6 +107,13 @@ export class AddReportFormatComponent {
  }
 
  openParamsAddDialog(paramType:string){
+  let positionInPdf :number;
+  if(this.parameterMasterList.length != undefined){
+    positionInPdf = this.parameterMasterList.length+1;
+  }
+  else{
+    positionInPdf = 1;
+  }
   const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '900px';
     dialogConfig.height = '500px';
@@ -111,7 +121,7 @@ export class AddReportFormatComponent {
     this.dialog.open(PrameterWithNormalRangeComponent ,{
       width : '1200px',
       height : '500px',
-      data: {testId: this.testId, paramType: paramType},
+      data: {testId: this.testId, paramType: paramType, positionInPdf: positionInPdf},
     }).afterClosed()
     .subscribe((shouldReload: boolean) => {
          //window.location.reload()

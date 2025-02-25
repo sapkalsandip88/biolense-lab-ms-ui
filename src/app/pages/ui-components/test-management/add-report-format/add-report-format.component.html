@@ -1,4 +1,4 @@
-@if( parameterMasterList.length>0) {
+@if(lenghtOfParam >= 0 ) {
 
 <mat-card class="cardWithShadow theme-card">
     <!-- <mat-card-header>
@@ -84,7 +84,6 @@
                       <td class="pdf-table-params" *ngIf="params.paramType != 'HEADING'">{{params.unit}}</td>
                       <td class="pdf-table-params" *ngIf="params.paramType != 'HEADING'">{{params.maleRangeFrom}} - {{params.maleRangeTo}}</td>
                       <td><button class="showme" mat-icon-button matTooltip="Edit Job" > <mat-icon>edit</mat-icon></button></td>
-                     
                   </tr> 
                 }
               
