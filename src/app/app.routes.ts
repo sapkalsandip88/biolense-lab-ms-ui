@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { AddReportFormatComponent } from './pages/ui-components/test-management/add-report-format/add-report-format.component';
+import { RegisterPatientComponent } from './pages/ui-components/patient-list-managment/register-patient/register-patient.component';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,10 @@ export const routes: Routes = [
   {
     path: 'add-report-format',
     component: AddReportFormatComponent
+  },
+  {
+    path: 'register-pateint',
+    component: RegisterPatientComponent
   },
   {
     path: '**',

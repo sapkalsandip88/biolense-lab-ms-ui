@@ -62,7 +62,10 @@ filterValues= {
   displayStyle = "none"; 
   testData:TestMaster[];
   ngOnInit(){
-     this.testService.getAllTests().subscribe(resp =>{
+     this.loadTestDetails();
+  }
+  loadTestDetails() {
+    this.testService.getAllTests().subscribe(resp =>{
       console.log("refresh")
        this.testData = resp;
       this.dataSource1 = new MatTableDataSource(this.testData);
@@ -83,7 +86,8 @@ filterValues= {
     height : '500px',
     }).afterClosed()
     .subscribe((shouldReload: boolean) => {
-         window.location.reload()
+         //window.location.reload()
+         this.loadTestDetails();
     });
   } 
   openPopupToEdit=(testId:string) =>{ 
@@ -101,7 +105,8 @@ filterValues= {
     data : {testId: testId}
     }).afterClosed()
     .subscribe((shouldReload: boolean) => {
-         window.location.reload();
+         //window.location.reload();
+         this.loadTestDetails();
     });
   } 
   routeToAddReport(element:any, testName:string) {
@@ -139,7 +144,8 @@ filterValues= {
       data:{'testId': testId}
       }).afterClosed()
       .subscribe((shouldReload: boolean) => {
-           window.location.reload()
+           //window.location.reload()
+           this.loadTestDetails();
       });
     } 
     

@@ -27,9 +27,9 @@ export class TestManagementService {
         return this.http.post<any>(callUrl,testDetails)
     }
 
-    saveParameterDetails(parameterDetails: ParameterMaster): Observable<ParameterMaster[]> {
+    saveParameterDetails(parameterDetails: ParameterMaster): Observable<ParameterMaster> {
         const callUrl= this.url+"/save-parameters/";
-        return this.http.post<ParameterMaster[]>(callUrl,parameterDetails)
+        return this.http.post<ParameterMaster>(callUrl,parameterDetails)
     }
 
     getParamForTest(testId: number) : Observable<ParameterMaster[]> {
@@ -49,10 +49,10 @@ export class TestManagementService {
         return this.http.get<boolean>(callUrl,{params: params})  
     }
 
-    deleteTest(testId: number) {
+    deleteTest(testId: number):Observable<boolean> {
         const callUrl= this.url+"/delete-test-details/";
-        let params = new HttpParams().set('testId',testId)
-        return this.http.get<boolean>(callUrl,{params: params})    }
-      
+        let params = new HttpParams().set('testdId',testId)
+        return this.http.get<boolean>(callUrl,{params: params})   
+    }
       
 }

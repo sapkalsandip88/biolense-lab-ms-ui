@@ -14,8 +14,9 @@ export class ParameterMaster{
     descriptiveMaleRange:string
     descriptiveFemaleRange:string
     description:string
-    enterDictionary:string
+    enterDictionary:string[]
     headingPosition:string
     paramType:string
     settings:string
+    valuesforlist:string
     }

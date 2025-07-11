@@ -20,7 +20,7 @@ import { ToastrService } from 'ngx-toastr';
  encapsulation: ViewEncapsulation.None,
 })
 
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmDialogComponent{
 
 
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent> ,
@@ -29,9 +29,6 @@ export class ConfirmDialogComponent implements OnInit {
    private _toastr: ToastrService,
     
   ) { }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
   onNoClick(): void {
         this.dialogRef.close();
   }

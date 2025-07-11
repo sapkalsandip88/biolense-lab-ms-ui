@@ -40,6 +40,7 @@ interface SelectPosition {
   encapsulation: ViewEncapsulation.None,
 })
 export class PrameterWithNormalRangeComponent {
+
 dataLoaded : boolean = false;
   parameterMaster: ParameterMaster = new ParameterMaster();
   constructor(private dialogRef: MatDialogRef<PrameterWithNormalRangeComponent>,
@@ -59,6 +60,7 @@ dataLoaded : boolean = false;
     }
   
     this.preparePosition();
+    this.prepareDictionaryValues()
     // if(this.data.paramId != null || this.data.paramId != undefined){
     //   this.getParamsDetails(this.data.testId, this.data.paramType,this.data.paramId);
     // }
@@ -71,7 +73,9 @@ dataLoaded : boolean = false;
     this.dialogRef.close();
   }
   selectedpositionInPdf: number;
+  selectedDictionaryValue : string;
   positionInPdf: SelectType[] =[];
+  dictionaryVal: SelectPosition[] =[];
   headingPosition: SelectPosition[]=[
     {value: "LEFT", viewValue: "LEFT"},
     {value: "CENTER", viewValue: "CENTER"}
@@ -84,6 +88,16 @@ selectedHeadingPosition = this.headingPosition[1].value;
      this.selectedpositionInPdf=this.positionInPdf[3].value;
   }
 
+  prepareDictionaryValues(){
+    console.log("lenght : ", this.parameterMaster.enterDictionary.length)
+    if( this.parameterMaster.enterDictionary){
+    for (let i = 0; i< this.parameterMaster.enterDictionary.length; i++) {
+      this.dictionaryVal[i] ={value:this.parameterMaster.enterDictionary[i], viewValue:this.parameterMaster.enterDictionary[i]}
+    }
+    this.dictionaryVal[this.parameterMaster.enterDictionary.length] = {value:"SELECT", viewValue:"SELECT"}
+    this.selectedDictionaryValue=this.dictionaryVal[this.parameterMaster.enterDictionary.length].value;
+  }
+  }
   saveParameterData(){
     console.log("param name : ", this.parameterMaster.parameterName)
     if (this.parameterMaster.parameterName == null) {
@@ -148,4 +162,43 @@ selectedHeadingPosition = this.headingPosition[1].value;
     this.parameterMaster.femaleRangeTo = event.target.value;
 
   }
+
+  deleteValues() {
+     console.log("delet value :", this.parameterMaster.valuesforlist);
+    this.parameterMaster.enterDictionary =  this.parameterMaster.enterDictionary.filter(value => value !== this.parameterMaster.valuesforlist)
+    this._testService.saveParameterDetails(this.parameterMaster).subscribe(resp => {
+      console.log("param after value delete  : ", resp);
+      if(resp) { 
+        this.parameterMaster = resp
+        this.prepareDictionaryValues();
+        this._toastr.success("Value deleted successfully.", 'success');
+      }
+    }, error => {
+      this._toastr.error(error.value, 'Error');
+    })
+    }
+
+  saveDictionaryValues() {
+    console.log("value  : ", this.parameterMaster.valuesforlist);
+    if( this.parameterMaster.enterDictionary[0] == ''){
+      this.parameterMaster.enterDictionary.pop()
+
+    }
+    this.parameterMaster.enterDictionary.push(this.parameterMaster.valuesforlist);
+    console.log("value  : ", this.parameterMaster);
+    this._testService.saveParameterDetails(this.parameterMaster).subscribe(resp => {
+      if(resp) { 
+        this.prepareDictionaryValues();
+        this._toastr.success("Value added successfully.", 'success');
+      }
+    }, error => {
+      this._toastr.error(error.value, 'Error');
+    })
+    
+    }
+
+    assignToValue(event: any) {
+      console.log( this.parameterMaster)
+      this.parameterMaster.valuesforlist = event.value;
+    }
 }

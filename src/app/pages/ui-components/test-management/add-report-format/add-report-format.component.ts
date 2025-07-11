@@ -108,7 +108,7 @@ export class AddReportFormatComponent {
 
  openParamsAddDialog(paramType:string){
   let positionInPdf :number;
-  if(this.parameterMasterList.length != undefined){
+  if(this.parameterMasterList != undefined || this.parameterMasterList != null){
     positionInPdf = this.parameterMasterList.length+1;
   }
   else{

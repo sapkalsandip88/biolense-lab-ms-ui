@@ -228,8 +228,13 @@ export const navItems: NavItem[] = [
     route: '/ui-components/badge',
   },
   {
+    displayName: 'Pateint List',
+    iconName: 'solar:inbox-archive-line-duotone',
+    route: '/ui-components/pateint-management',
+  },
+  {
     displayName: 'Test Management',
-    iconName: 'solar:archive-minimalistic-line-duotone',
+    iconName: 'solar:text-field-focus-line-duotone',
     route: '/ui-components/test-management',
   },
   {
